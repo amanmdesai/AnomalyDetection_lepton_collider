@@ -19,3 +19,5 @@ Analysis/stage1/
 Samples/
 Tagging/
 GenScripts/Generator/
+Analysis/dataset/
+*csv

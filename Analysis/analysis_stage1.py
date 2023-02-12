@@ -67,7 +67,7 @@ class RDFanalysis():
 
             .Alias("Electron0", "Electron#0.index")
             .Define("electrons",  "ReconstructedParticle::get(Electron0, ReconstructedParticles)")
-            .Define("n_electron",        "return electrons.size()")
+            .Define("n_electron",   "return electrons.size()")
 
             .Define("electron_e", "ReconstructedParticle::get_e(electrons)")
             .Define("electron_pt", "ReconstructedParticle::get_pt(electrons)")
@@ -101,6 +101,16 @@ class RDFanalysis():
             "jet_phi",
             "jet_eta",
 
+            "muon_e",
+            "muon_pt",
+            "muon_phi",
+            "muon_eta",
+
+            "electron_e",
+            "electron_pt",
+            "electron_phi",
+            "electron_eta",
+
             "jet_e_1",
             "jet_pt_1",
             "jet_phi_1",
@@ -111,10 +121,6 @@ class RDFanalysis():
             "jet_phi_2",
             "jet_eta_2",
 
-            "muon_e",
-            "muon_pt",
-            "muon_phi",
-            "muon_eta",
 
             "muon_e_1",
             "muon_pt_1",
@@ -125,11 +131,6 @@ class RDFanalysis():
             "muon_pt_2",
             "muon_phi_2",
             "muon_eta_2",
-
-            "electron_e",
-            "electron_pt",
-            "electron_phi",
-            "electron_eta",
 
             "electron_e_1",
             "electron_pt_1",

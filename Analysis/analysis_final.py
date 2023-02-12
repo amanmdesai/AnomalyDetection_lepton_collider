@@ -24,13 +24,13 @@ cutList = {"sel0":"jet_e.size()>0."}
 #Dictionary for the ouput variable/hitograms. The key is the name of the variable in the output files. "name" is the name of the variable in the input file, "title" is the x-axis label of the histogram, "bin" the number of bins of the histogram, "xmin" the minimum x-axis value and "xmax" the maximum x-axis value.
 histoList = {
 
-    "jet_e":{"name":"jet_e","title":"Jet Energy [GeV]","bin":20,"xmin":0,"xmax":120},
-    "muon_e":{"name":"muon_e","title":"Muon Energy [GeV]","bin":20,"xmin":0,"xmax":120},
-    "electron_e":{"name":"electron_e","title":"Electron Energy [GeV]","bin":20,"xmin":0,"xmax":120},
+    "jet_e":{"name":"jet_e","title":"Jet Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "muon_e":{"name":"muon_e","title":"Muon Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "electron_e":{"name":"electron_e","title":"Electron Energy [GeV]","bin":25,"xmin":0,"xmax":160},
 
-    "jet_pt":{"name":"jet_pt","title":"Jet pT [GeV]","bin":20,"xmin":0,"xmax":120},
-    "muon_pt":{"name":"muon_pt","title":"Muon pT [GeV]","bin":20,"xmin":0,"xmax":120},
-    "electron_pt":{"name":"electron_pt","title":"Electron pT [GeV]","bin":20,"xmin":0,"xmax":120},
+    "jet_pt":{"name":"jet_pt","title":"Jet pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "muon_pt":{"name":"muon_pt","title":"Muon pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "electron_pt":{"name":"electron_pt","title":"Electron pT [GeV]","bin":25,"xmin":0,"xmax":160},
 
     "jet_phi":{"name":"jet_phi","title":"Jet #phi","bin":15,"xmin":-6,"xmax":6},
     "muon_phi":{"name":"muon_phi","title":"Muon #phi","bin":15,"xmin":-6,"xmax":6},

@@ -36,7 +36,6 @@ selections['sig']   = ["sel0"]#,"sel1"]
 
 extralabel = {}
 extralabel['sel0'] = ""
-extralabel['sel1'] = ""
 
 colors = {}
 colors['sig'] = ROOT.kRed

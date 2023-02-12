@@ -17,6 +17,10 @@ filename = "background.csv"
 df = pd.read_csv(filename)
 df = df.drop(columns=['Unnamed: 0'],axis=1)
 
+for c in df.columns:
+    df[c] = (df[c] - df[c].mean())/df[c].std()
+
+
 df = df.sample(frac = 1)
 sample_frac = .6
 
@@ -25,7 +29,7 @@ X_val = df[int(sample_frac*df.shape[0]):int((sample_frac+.2)*df.shape[0])].value
 X_test = df[int((sample_frac+.2)*df.shape[0]):].values
 
 def Model():
-    nodes = [30,20,15]
+    nodes = [30,25,15]
     latent_space_dim = 5
     activation="LeakyReLU"
     model = keras.Sequential([
@@ -39,15 +43,15 @@ def Model():
         keras.layers.Dense(nodes[0],use_bias=False,activation=activation,name='Dense_21'),
         keras.layers.Dense(X_train.shape[1],use_bias=False),
     ])
-    model.compile(optimizer = keras.optimizers.Adam(lr=0.01),metrics=['accuracy'], loss='mse')
+    model.compile(optimizer = keras.optimizers.Adam(lr=0.03),metrics=['accuracy'], loss='mse')
     input_shape = X_train.shape
     model.build(input_shape)
     model.summary()
     return model
 
 
-EPOCHS = 100
-BATCH_SIZE = 512
+EPOCHS = 200
+BATCH_SIZE = 1024
 autoencoder = Model()#inputs = inputArray, outputs=decoder
 
 '''
@@ -63,20 +67,20 @@ tf.keras.utils.plot_model(
     layer_range=None,
     show_layer_activations=False
 )
-
+'''
 
 callbacks = tf.keras.callbacks.EarlyStopping(
     monitor="loss",
-    min_delta=10,
-    patience=5,
+    min_delta=.001,
+    patience=8,
     verbose=1,
     mode="min",
     baseline=None,
     restore_best_weights=True,
 )
-'''
+
 history = autoencoder.fit(X_train, X_train, epochs = EPOCHS, batch_size = BATCH_SIZE,
-                  validation_data=(X_val, X_val))
+                  validation_data=(X_val, X_val))#,callbacks=callbacks)
 
 
 bkg_prediction = autoencoder.predict(X_test)
@@ -89,6 +93,8 @@ signals_file = ["signal.csv"]
 signal_data = []
 for i, label in enumerate(signal_labels):
     df = pd.read_csv(signals_file[i])
+    for c in df.columns:
+        df[c] = (df[c] - df[c].mean())/df[c].std()
     df = df.drop(columns=['Unnamed: 0'],axis=1)
     test_data = df[:].values
     signal_data.append(test_data)
@@ -107,8 +113,6 @@ def mse_loss(true, prediction):
     loss = tf.reduce_mean(tf.math.square(true - prediction), axis=-1)
     return loss
 
-
-
 # compute loss value (true, predicted)
 total_loss = []
 total_loss.append(mse_loss(X_test, bkg_prediction.astype(np.float32)).numpy())
@@ -118,7 +122,6 @@ for i, signal_X in enumerate(signal_data):
     )
 
 bin_size = 100
-
 
 plt.figure(figsize=(10, 8))
 plt.hist(
@@ -130,7 +133,6 @@ plt.hist(
         fill=False,
         linewidth=1.5,
     )
-
 for i, label in enumerate(signal_labels):
     plt.hist(
         total_loss[i+1],
@@ -151,7 +153,9 @@ plt.show()
 
 labels = np.concatenate([["Background"], np.array(signal_labels)])
 
-epochs = range(1,EPOCHS+1)
+epochs = range(1,len(history.history['loss'])+1)
+#epochs =range(1,int(len(history.history['loss']+1)))# range(1,Model().params.get('steps')+1)
+#
 
 plt.plot(epochs,history.history["loss"], label="Training loss")
 plt.plot(epochs,history.history["val_loss"], label="Validation loss")
@@ -197,9 +201,9 @@ for i, label in enumerate(labels):
     plt.legend(loc="center right")
     plt.grid(True)
     plt.tight_layout()
-plt.plot(np.linspace(0, 1), np.linspace(0, 1), "--", color="0.75")
-plt.axvline(
-    0.00001, color="red", linestyle="dashed", linewidth=1
-)  # threshold value for measuring anomaly detection efficiency
+#plt.plot(np.linspace(0, 1), np.linspace(0, 1), "--", color="0.75")
+#plt.axvline(
+#    0.00001, color="red", linestyle="dashed", linewidth=1
+#)  # threshold value for measuring anomaly detection efficiency
 plt.title("ROC AE")
 plt.show()

@@ -47,7 +47,7 @@ X_test = df[int((sample_frac+.2)*df.shape[0]):].values
 #scaler.transform(X_test)
 
 def Model():
-    nodes = [32,25,15]
+    nodes = [32,24,16]
     latent_space_dim = 5
     activation="LeakyReLU"
     model = keras.Sequential([
@@ -61,7 +61,7 @@ def Model():
         keras.layers.Dense(nodes[0],use_bias=False,activation=activation,name='Dense_21'),
         keras.layers.Dense(X_train.shape[1],use_bias=False),
     ])
-    model.compile(optimizer = keras.optimizers.Adam(learning_rate=0.09,beta_1=0.4,beta_2=0.2,epsilon=1e-03,amsgrad=True),metrics=['accuracy'], loss='mse')
+    model.compile(optimizer = keras.optimizers.Adam(learning_rate=0.08,beta_1=0.3,beta_2=0.2,epsilon=1e-03,amsgrad=True),metrics=['accuracy'], loss='mse')
     input_shape = X_train.shape
     model.build(input_shape)
     model.summary()
@@ -69,7 +69,7 @@ def Model():
 
 
 EPOCHS = 200
-BATCH_SIZE = 256
+BATCH_SIZE = 512
 autoencoder = Model()#inputs = inputArray, outputs=decoder
 
 '''
@@ -169,6 +169,7 @@ plt.xlabel("Autoencoder Loss")
 plt.ylabel("Probability (a.u.)")
 plt.title("MSE loss")
 plt.legend(loc="best")
+plt.savefig('dnn/mse_loss_dnn.pdf')
 plt.show()
 
 
@@ -183,14 +184,15 @@ plt.plot(epochs,history.history["loss"], label="Training loss")
 plt.plot(epochs,history.history["val_loss"], label="Validation loss")
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
-
 plt.legend()
+plt.savefig('dnn/loss_dnn.pdf')
 plt.show()
 plt.plot(epochs,history.history["accuracy"], label="Training accuracy")
 plt.plot(epochs,history.history["val_accuracy"], label="Validation accuracy")
 plt.xlabel("Epoch")
 plt.ylabel("Accuracy")
 plt.legend()
+plt.savefig('dnn/accuracy_dnn.pdf')
 plt.show()
 
 
@@ -218,7 +220,7 @@ for i, label in enumerate(labels):
     df = pd.DataFrame(columns=['FPR','TPR'])
     df['FPR'] = fpr_loss
     df['TPR'] = tpr_loss
-    df.to_csv('roc_'+label+".csv")
+    df.to_csv('dnn/roc_'+label+".csv")
     plt.plot(
         tpr_loss,
         1/(fpr_loss+epsilon),
@@ -242,4 +244,5 @@ plt.plot(np.linspace(0, 1), 1/(np.linspace(0, 1)+epsilon), "--", color="0.75")
 #    0.00001, color="red", linestyle="dashed", linewidth=1
 #)  # threshold value for measuring anomaly detection efficiency
 plt.title("ROC AE")
+plt.savefig('dnn/roc_dnn.pdf')
 plt.show()

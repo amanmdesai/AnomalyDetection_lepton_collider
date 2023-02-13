@@ -13,6 +13,7 @@ stacksig       = ['stack','nostack']
 outdir         = 'plots/'
 
 variables =  [
+
             "jet_e",
             "jet_pt",
             "jet_phi",
@@ -27,6 +28,38 @@ variables =  [
             "electron_pt",
             "electron_phi",
             "electron_eta",
+
+            "jet_e_1",
+            "jet_pt_1",
+            "jet_phi_1",
+            "jet_eta_1",
+
+            "jet_e_2",
+            "jet_pt_2",
+            "jet_phi_2",
+            "jet_eta_2",
+
+
+            "muon_e_1",
+            "muon_pt_1",
+            "muon_phi_1",
+            "muon_eta_1",
+
+            "muon_e_2",
+            "muon_pt_2",
+            "muon_phi_2",
+            "muon_eta_2",
+
+            "electron_e_1",
+            "electron_pt_1",
+            "electron_phi_1",
+            "electron_eta_1",
+
+            "electron_e_2",
+            "electron_pt_2",
+            "electron_phi_2",
+            "electron_eta_2",
+
             ]
 
 

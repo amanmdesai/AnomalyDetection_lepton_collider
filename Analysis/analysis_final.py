@@ -28,17 +28,49 @@ histoList = {
     "muon_e":{"name":"muon_e","title":"Muon Energy [GeV]","bin":25,"xmin":0,"xmax":160},
     "electron_e":{"name":"electron_e","title":"Electron Energy [GeV]","bin":25,"xmin":0,"xmax":160},
 
+    "jet_e_1":{"name":"jet_e_1","title":"1st Jet Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "muon_e_1":{"name":"muon_e_1","title":"1st Muon Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "electron_e_1":{"name":"electron_e_1","title":"1st Electron Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+
+    "jet_e_2":{"name":"jet_e_2","title":"2nd Jet Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "muon_e_2":{"name":"muon_e_2","title":"2nd Muon Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "electron_e_2":{"name":"electron_e_2","title":"2nd Electron Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+
     "jet_pt":{"name":"jet_pt","title":"Jet pT [GeV]","bin":25,"xmin":0,"xmax":160},
     "muon_pt":{"name":"muon_pt","title":"Muon pT [GeV]","bin":25,"xmin":0,"xmax":160},
     "electron_pt":{"name":"electron_pt","title":"Electron pT [GeV]","bin":25,"xmin":0,"xmax":160},
 
-    "jet_phi":{"name":"jet_phi","title":"Jet #phi","bin":15,"xmin":-6,"xmax":6},
+    "jet_pt_1":{"name":"jet_pt_1","title":"1st Jet pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "muon_pt_1":{"name":"muon_pt_1","title":"1st Muon pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "electron_pt_1":{"name":"electron_pt_1","title":"1st Electron pT [GeV]","bin":25,"xmin":0,"xmax":160},
+
+    "jet_pt_2":{"name":"jet_pt_2","title":"2nd Jet pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "muon_pt_2":{"name":"muon_pt_2","title":"2nd Muon pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "electron_pt_2":{"name":"electron_pt_2","title":"2nd Electron pT [GeV]","bin":25,"xmin":0,"xmax":160},
+
+    "jet_phi":{"name":"jet_phi","title":"Jet #phi","bin":5,"xmin":-2,"xmax":8},
     "muon_phi":{"name":"muon_phi","title":"Muon #phi","bin":15,"xmin":-6,"xmax":6},
     "electron_phi":{"name":"electron_phi","title":"Electron #phi","bin":15,"xmin":-6,"xmax":6},
+
+    "jet_phi_1":{"name":"jet_phi_1","title":"1st Jet #phi","bin":5,"xmin":-2,"xmax":8},
+    "muon_phi_1":{"name":"muon_phi_1","title":"1st Muon #phi","bin":15,"xmin":-6,"xmax":6},
+    "electron_phi_1":{"name":"electron_phi_1","title":"1st Electron #phi","bin":15,"xmin":-6,"xmax":6},
+
+    "jet_phi_2":{"name":"jet_phi_2","title":"2nd Jet #phi","bin":5,"xmin":-2,"xmax":8},
+    "muon_phi_2":{"name":"muon_phi_2","title":"2nd Muon #phi","bin":15,"xmin":-6,"xmax":6},
+    "electron_phi_2":{"name":"electron_phi_2","title":"2nd Electron #phi","bin":15,"xmin":-6,"xmax":6},
 
     "jet_eta":{"name":"jet_eta","title":"Jet #eta","bin":15,"xmin":-6,"xmax":6},
     "muon_eta":{"name":"muon_eta","title":"Muon #eta","bin":15,"xmin":-6,"xmax":6},
     "electron_eta":{"name":"electron_eta","title":"Electron #eta","bin":15,"xmin":-6,"xmax":6},
+
+    "jet_eta_1":{"name":"jet_eta_1","title":"1st Jet #eta","bin":15,"xmin":-6,"xmax":6},
+    "muon_eta_1":{"name":"muon_eta_1","title":"1st Muon #eta","bin":15,"xmin":-6,"xmax":6},
+    "electron_eta_1":{"name":"electron_eta_1","title":"1st Electron #eta","bin":15,"xmin":-6,"xmax":6},
+
+    "jet_eta_2":{"name":"jet_eta_2","title":"2nd Jet #eta","bin":15,"xmin":-6,"xmax":6},
+    "muon_eta_2":{"name":"muon_eta_2","title":"2nd Muon #eta","bin":15,"xmin":-6,"xmax":6},
+    "electron_eta_2":{"name":"electron_eta_2","title":"2nd Electron #eta","bin":15,"xmin":-6,"xmax":6},
 
 
 }

@@ -3,19 +3,32 @@ import pandas as pd
 import math
 import os
 import pathlib
-import matplotlib.pyplot as plt
-import matplotlib
 import tensorflow as tf
 import tensorflow.keras as keras
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, BatchNormalization, Activation, Layer, ReLU, LeakyReLU
 from tensorflow.keras import backend as K
 from sklearn.metrics import roc_curve, auc
+from sklearn.preprocessing import StandardScaler,RobustScaler,PowerTransformer,MinMaxScaler,Normalizer
+
+
+
+import matplotlib.pyplot as plt
+params = {'legend.fontsize': 'x-large',
+          'figure.figsize': (10,8),
+         'axes.labelsize': 'x-large',
+         'axes.titlesize':'x-large',
+         'xtick.labelsize':'x-large',
+         'ytick.labelsize':'x-large'}
+plt.rcParams.update(params)
+
 
 
 filename = "background.csv"
 df = pd.read_csv(filename)
 df = df.drop(columns=['Unnamed: 0'],axis=1)
+
+#scaler = Normalizer()
 
 for c in df.columns:
     df[c] = (df[c] - df[c].mean())/df[c].std()
@@ -28,8 +41,13 @@ X_train = df[:int(sample_frac*df.shape[0])].values
 X_val = df[int(sample_frac*df.shape[0]):int((sample_frac+.2)*df.shape[0])].values
 X_test = df[int((sample_frac+.2)*df.shape[0]):].values
 
+
+#scaler.fit_transform(X_train)
+#scaler.transform(X_val)
+#scaler.transform(X_test)
+
 def Model():
-    nodes = [30,25,15]
+    nodes = [32,25,15]
     latent_space_dim = 5
     activation="LeakyReLU"
     model = keras.Sequential([
@@ -43,7 +61,7 @@ def Model():
         keras.layers.Dense(nodes[0],use_bias=False,activation=activation,name='Dense_21'),
         keras.layers.Dense(X_train.shape[1],use_bias=False),
     ])
-    model.compile(optimizer = keras.optimizers.Adam(lr=0.03),metrics=['accuracy'], loss='mse')
+    model.compile(optimizer = keras.optimizers.Adam(learning_rate=0.09,beta_1=0.4,beta_2=0.2,epsilon=1e-03,amsgrad=True),metrics=['accuracy'], loss='mse')
     input_shape = X_train.shape
     model.build(input_shape)
     model.summary()
@@ -51,7 +69,7 @@ def Model():
 
 
 EPOCHS = 200
-BATCH_SIZE = 1024
+BATCH_SIZE = 256
 autoencoder = Model()#inputs = inputArray, outputs=decoder
 
 '''
@@ -97,6 +115,7 @@ for i, label in enumerate(signal_labels):
         df[c] = (df[c] - df[c].mean())/df[c].std()
     df = df.drop(columns=['Unnamed: 0'],axis=1)
     test_data = df[:].values
+    #scaler.transform(test_data)
     signal_data.append(test_data)
 
 
@@ -123,7 +142,9 @@ for i, signal_X in enumerate(signal_data):
 
 bin_size = 100
 
-plt.figure(figsize=(10, 8))
+plt.rcParams.update(params)
+
+#plt.figure(figsize=(10, 8))
 plt.hist(
         total_loss[0],
         bins=bin_size,
@@ -157,22 +178,31 @@ epochs = range(1,len(history.history['loss'])+1)
 #epochs =range(1,int(len(history.history['loss']+1)))# range(1,Model().params.get('steps')+1)
 #
 
+plt.rcParams.update(params)
 plt.plot(epochs,history.history["loss"], label="Training loss")
 plt.plot(epochs,history.history["val_loss"], label="Validation loss")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+
 plt.legend()
 plt.show()
 plt.plot(epochs,history.history["accuracy"], label="Training accuracy")
 plt.plot(epochs,history.history["val_accuracy"], label="Validation accuracy")
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
 plt.legend()
 plt.show()
 
 
 target_background = np.zeros(total_loss[0].shape[0])
 
-plt.figure(figsize=(10, 8))
+plt.rcParams.update(params)
+
+#plt.figure(figsize=(10, 8))
+epsilon = 1e-5
 for i, label in enumerate(labels):
-    #if i == 0:
-    #    continue  # background events
+    if i == 0:
+        continue  # background events
 
     trueVal = np.concatenate(
         (np.ones(total_loss[i].shape[0]), target_background)
@@ -185,23 +215,29 @@ for i, label in enumerate(labels):
             print(label, tpr_loss[j])
 
     auc_loss = auc(fpr_loss, tpr_loss)
-
+    df = pd.DataFrame(columns=['FPR','TPR'])
+    df['FPR'] = fpr_loss
+    df['TPR'] = tpr_loss
+    df.to_csv('roc_'+label+".csv")
     plt.plot(
-        fpr_loss,
         tpr_loss,
+        1/(fpr_loss+epsilon),
+        #fpr_loss,
+        #tpr_loss,
         "-",
-        label=f"{label} (auc = {auc_loss * 100.0:.1f}%)",
+        label=f"{label} (AUC = {auc_loss * 100.0:.1f}%)",
         linewidth=1.5,
     )
 
-    plt.semilogx()
-    plt.semilogy()
-    plt.ylabel("True Positive Rate")
-    plt.xlabel("False Positive Rate")
+    #plt.semilogx()
+    plt.yscale('log')
+    plt.xlabel("Signal Efficiency")
+    plt.ylabel("Background Rejection")
     plt.legend(loc="center right")
-    plt.grid(True)
-    plt.tight_layout()
-#plt.plot(np.linspace(0, 1), np.linspace(0, 1), "--", color="0.75")
+    #plt.grid(True)
+    plt.xlim(1e-2,1)
+    #plt.tight_layout()
+plt.plot(np.linspace(0, 1), 1/(np.linspace(0, 1)+epsilon), "--", color="0.75")
 #plt.axvline(
 #    0.00001, color="red", linestyle="dashed", linewidth=1
 #)  # threshold value for measuring anomaly detection efficiency

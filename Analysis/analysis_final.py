@@ -13,8 +13,8 @@ nCPUS     = 8
 procDict = "/FCC/GenScripts/FCCee_procDict_spring2021_IDEA.json"
 
 procDictAdd={
-    "signal":{"numberOfEvents": 10000, "sumOfWeights": 10000, "crossSection": 0.1, "kfactor": 1.0, "matchingEfficiency": 1.0},
-    "background":{"numberOfEvents": 10000, "sumOfWeights": 10000, "crossSection": 0.05, "kfactor": 1.0, "matchingEfficiency": 1.0}
+    "signal":{"numberOfEvents": 10000, "sumOfWeights": 10000, "crossSection": 0.03, "kfactor": 1.0, "matchingEfficiency": 1.0},
+    "background":{"numberOfEvents": 10000, "sumOfWeights": 10000, "crossSection": 0.163, "kfactor": 1.0, "matchingEfficiency": 1.0}
 }
 #produces ROOT TTrees, default is False
 doTree = True
@@ -24,29 +24,29 @@ cutList = {"sel0":"jet_e.size()>=0."}
 #Dictionary for the ouput variable/hitograms. The key is the name of the variable in the output files. "name" is the name of the variable in the input file, "title" is the x-axis label of the histogram, "bin" the number of bins of the histogram, "xmin" the minimum x-axis value and "xmax" the maximum x-axis value.
 histoList = {
 
-    "jet_e":{"name":"jet_e","title":"Jet Energy [GeV]","bin":25,"xmin":0,"xmax":160},
-    "muon_e":{"name":"muon_e","title":"Muon Energy [GeV]","bin":25,"xmin":0,"xmax":160},
-    "electron_e":{"name":"electron_e","title":"Electron Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "jet_e":{"name":"jet_e","title":"Jet Energy [GeV]","bin":25,"xmin":0,"xmax":200},
+    "muon_e":{"name":"muon_e","title":"Muon Energy [GeV]","bin":25,"xmin":0,"xmax":200},
+    "electron_e":{"name":"electron_e","title":"Electron Energy [GeV]","bin":25,"xmin":0,"xmax":200},
 
-    "jet_e_1":{"name":"jet_e_1","title":"1st Jet Energy [GeV]","bin":25,"xmin":0,"xmax":160},
-    "muon_e_1":{"name":"muon_e_1","title":"1st Muon Energy [GeV]","bin":25,"xmin":0,"xmax":160},
-    "electron_e_1":{"name":"electron_e_1","title":"1st Electron Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "jet_e_1":{"name":"jet_e_1","title":"1st Jet Energy [GeV]","bin":25,"xmin":0,"xmax":200},
+    "muon_e_1":{"name":"muon_e_1","title":"1st Muon Energy [GeV]","bin":25,"xmin":0,"xmax":200},
+    "electron_e_1":{"name":"electron_e_1","title":"1st Electron Energy [GeV]","bin":25,"xmin":0,"xmax":200},
 
-    "jet_e_2":{"name":"jet_e_2","title":"2nd Jet Energy [GeV]","bin":25,"xmin":0,"xmax":160},
-    "muon_e_2":{"name":"muon_e_2","title":"2nd Muon Energy [GeV]","bin":25,"xmin":0,"xmax":160},
-    "electron_e_2":{"name":"electron_e_2","title":"2nd Electron Energy [GeV]","bin":25,"xmin":0,"xmax":160},
+    "jet_e_2":{"name":"jet_e_2","title":"2nd Jet Energy [GeV]","bin":25,"xmin":0,"xmax":200},
+    "muon_e_2":{"name":"muon_e_2","title":"2nd Muon Energy [GeV]","bin":25,"xmin":0,"xmax":200},
+    "electron_e_2":{"name":"electron_e_2","title":"2nd Electron Energy [GeV]","bin":25,"xmin":0,"xmax":200},
 
-    "jet_pt":{"name":"jet_pt","title":"Jet pT [GeV]","bin":25,"xmin":0,"xmax":160},
-    "muon_pt":{"name":"muon_pt","title":"Muon pT [GeV]","bin":25,"xmin":0,"xmax":160},
-    "electron_pt":{"name":"electron_pt","title":"Electron pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "jet_pt":{"name":"jet_pt","title":"Jet pT [GeV]","bin":25,"xmin":0,"xmax":200},
+    "muon_pt":{"name":"muon_pt","title":"Muon pT [GeV]","bin":25,"xmin":0,"xmax":200},
+    "electron_pt":{"name":"electron_pt","title":"Electron pT [GeV]","bin":25,"xmin":0,"xmax":200},
 
-    "jet_pt_1":{"name":"jet_pt_1","title":"1st Jet pT [GeV]","bin":25,"xmin":0,"xmax":160},
-    "muon_pt_1":{"name":"muon_pt_1","title":"1st Muon pT [GeV]","bin":25,"xmin":0,"xmax":160},
-    "electron_pt_1":{"name":"electron_pt_1","title":"1st Electron pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "jet_pt_1":{"name":"jet_pt_1","title":"1st Jet pT [GeV]","bin":25,"xmin":0,"xmax":200},
+    "muon_pt_1":{"name":"muon_pt_1","title":"1st Muon pT [GeV]","bin":25,"xmin":0,"xmax":200},
+    "electron_pt_1":{"name":"electron_pt_1","title":"1st Electron pT [GeV]","bin":25,"xmin":0,"xmax":200},
 
-    "jet_pt_2":{"name":"jet_pt_2","title":"2nd Jet pT [GeV]","bin":25,"xmin":0,"xmax":160},
-    "muon_pt_2":{"name":"muon_pt_2","title":"2nd Muon pT [GeV]","bin":25,"xmin":0,"xmax":160},
-    "electron_pt_2":{"name":"electron_pt_2","title":"2nd Electron pT [GeV]","bin":25,"xmin":0,"xmax":160},
+    "jet_pt_2":{"name":"jet_pt_2","title":"2nd Jet pT [GeV]","bin":25,"xmin":0,"xmax":200},
+    "muon_pt_2":{"name":"muon_pt_2","title":"2nd Muon pT [GeV]","bin":25,"xmin":0,"xmax":200},
+    "electron_pt_2":{"name":"electron_pt_2","title":"2nd Electron pT [GeV]","bin":25,"xmin":0,"xmax":200},
 
     "jet_phi":{"name":"jet_phi","title":"Jet #phi","bin":5,"xmin":-2,"xmax":8},
     "muon_phi":{"name":"muon_phi","title":"Muon #phi","bin":15,"xmin":-6,"xmax":6},

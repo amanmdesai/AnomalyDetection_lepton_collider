@@ -9,7 +9,7 @@ filename = "results_tmva.root"
 
 
 methodname =["BDT"]# ["Cuts","Likelihood","BDT","BDT-Grad","HMatrix","CFMlpANN","KNN","Fisher","MLP","DL1r-try"]
-var = ["0.93"]#[", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75"]
+var = ["0.80"]#[", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75",", 0.75"]
 f = TFile.Open(filename,"read")
 c = ROOT.TCanvas()
 legend = ROOT.TLegend(0.18,0.45,0.45,0.86)

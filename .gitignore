@@ -14,10 +14,12 @@
 *__pycache__
 *.lo
 *sin
+*csv
+*pdf
+
 Analysis/plots/
 Analysis/stage1/
 Samples/
 Tagging/
 GenScripts/Generator/
 Analysis/dataset/
-*csv

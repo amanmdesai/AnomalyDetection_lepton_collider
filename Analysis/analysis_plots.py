@@ -2,7 +2,7 @@ import ROOT
 
 # global parameters
 intLumi        = 5.0e+06 #in pb-1
-ana_tex        = 'e^{+}e^{-} #rightarrow Z H'
+ana_tex        = ''#e^{+}e^{-} #rightarrow Z H'
 delphesVersion = '3.4.2'
 energy         = 240.0
 collider       = 'FCC-ee'

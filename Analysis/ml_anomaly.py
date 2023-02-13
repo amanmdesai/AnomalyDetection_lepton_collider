@@ -61,14 +61,14 @@ def Model():
         keras.layers.Dense(nodes[0],use_bias=False,activation=activation,name='Dense_21'),
         keras.layers.Dense(X_train.shape[1],use_bias=False),
     ])
-    model.compile(optimizer = keras.optimizers.Adam(learning_rate=0.08,beta_1=0.3,beta_2=0.2,epsilon=1e-03,amsgrad=True),metrics=['accuracy'], loss='mse')
+    model.compile(optimizer = keras.optimizers.Adam(learning_rate=0.08,beta_1=0.42,beta_2=0.32,epsilon=1e-03,amsgrad=True),metrics=['accuracy'], loss='mse')
     input_shape = X_train.shape
     model.build(input_shape)
     model.summary()
     return model
 
 
-EPOCHS = 200
+EPOCHS = 250
 BATCH_SIZE = 512
 autoencoder = Model()#inputs = inputArray, outputs=decoder
 
@@ -166,8 +166,8 @@ for i, label in enumerate(signal_labels):
     )
 plt.yscale("log")
 plt.xlabel("Autoencoder Loss")
-plt.ylabel("Probability (a.u.)")
-plt.title("MSE loss")
+plt.ylabel("Probability")
+#plt.title("MSE loss")
 plt.legend(loc="best")
 plt.savefig('dnn/mse_loss_dnn.pdf')
 plt.show()
@@ -199,23 +199,13 @@ plt.show()
 target_background = np.zeros(total_loss[0].shape[0])
 
 plt.rcParams.update(params)
-
-#plt.figure(figsize=(10, 8))
 epsilon = 1e-5
 for i, label in enumerate(labels):
     if i == 0:
         continue  # background events
-
-    trueVal = np.concatenate(
-        (np.ones(total_loss[i].shape[0]), target_background)
-    )  # anomaly=1, bkg=0
+    trueVal = np.concatenate((np.ones(total_loss[i].shape[0]), target_background))
     predVal_loss = np.concatenate((total_loss[i], total_loss[0]))
-
     fpr_loss, tpr_loss, threshold_loss = roc_curve(trueVal, predVal_loss)
-    for j in range(len(fpr_loss)):
-        if fpr_loss[j] == 0.00001:
-            print(label, tpr_loss[j])
-
     auc_loss = auc(fpr_loss, tpr_loss)
     df = pd.DataFrame(columns=['FPR','TPR'])
     df['FPR'] = fpr_loss
@@ -224,25 +214,40 @@ for i, label in enumerate(labels):
     plt.plot(
         tpr_loss,
         1/(fpr_loss+epsilon),
-        #fpr_loss,
-        #tpr_loss,
         "-",
         label=f"{label} (AUC = {auc_loss * 100.0:.1f}%)",
         linewidth=1.5,
     )
-
-    #plt.semilogx()
     plt.yscale('log')
     plt.xlabel("Signal Efficiency")
-    plt.ylabel("Background Rejection")
-    plt.legend(loc="center right")
-    #plt.grid(True)
+    plt.ylabel("Background Rejection (1/$\epsilon_b$)")
+    plt.legend(loc="best")
     plt.xlim(1e-2,1)
-    #plt.tight_layout()
 plt.plot(np.linspace(0, 1), 1/(np.linspace(0, 1)+epsilon), "--", color="0.75")
-#plt.axvline(
-#    0.00001, color="red", linestyle="dashed", linewidth=1
-#)  # threshold value for measuring anomaly detection efficiency
-plt.title("ROC AE")
 plt.savefig('dnn/roc_dnn.pdf')
+plt.show()
+
+
+
+for i, label in enumerate(labels):
+    if i == 0:
+        continue  # background events
+    trueVal = np.concatenate((np.ones(total_loss[i].shape[0]), target_background))
+    predVal_loss = np.concatenate((total_loss[i], total_loss[0]))
+    fpr_loss, tpr_loss, threshold_loss = roc_curve(trueVal, predVal_loss)
+    auc_loss = auc(fpr_loss, tpr_loss)
+    plt.plot(
+        tpr_loss,
+        1-fpr_loss,
+        "-",
+        label=f"{label} (AUC = {auc_loss * 100.0:.1f}%)",
+        linewidth=1.5,
+    )
+    #plt.yscale('log')
+    plt.xlabel("Signal Efficiency")
+    plt.ylabel(f"Background Rejection (1-$\epsilon_b$)")
+    plt.legend(loc="best")
+    plt.xlim(1e-2,1)
+plt.plot(np.linspace(0, 1), 1-(np.linspace(0, 1)), "--", color="0.75")
+plt.savefig('dnn/roc_dnn_2.pdf')
 plt.show()

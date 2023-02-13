@@ -45,17 +45,17 @@ X=X.to_numpy()
 y=y.to_numpy()
 
 
-X_train, X_valid, y_train, y_valid =  train_test_split(X,y,random_state=1,test_size=.65)
-X_valid, X_test, y_valid, y_test =  train_test_split(X_valid,y_valid,random_state=1,test_size=.7)
+X_train, X_valid, y_train, y_valid =  train_test_split(X,y,random_state=1,test_size=.7)
+#X_valid, X_test, y_valid, y_test =  train_test_split(X_valid,y_valid,random_state=1,test_size=.7)
 
 
 scaler = preprocessing.StandardScaler().fit(X_train)
 X_train = scaler.transform(X_train)
 X_valid = scaler.transform(X_valid)
-X_test = scaler.transform(X_test)
+#X_test = scaler.transform(X_test)
 
 
-rand = xgb.XGBClassifier(max_depth=10,sampling_method='uniform',eta=0.1,alpha=.2,eval_metric='rmse',num_parallel_tree=10,n_jobs=8,tree_method='exact')#criterion='gini',min_samples_leaf=5,max_depth=6,n_jobs=-1)
+rand = xgb.XGBClassifier(max_depth=8,sampling_method='uniform',eta=0.15,alpha=.4,eval_metric='rmse',n_jobs=8,tree_method='approx')#criterion='gini',min_samples_leaf=5,max_depth=6,n_jobs=-1)
 rand.fit(X_train,y_train)
 y_pred_xgb = rand.predict_proba(X_valid)
 
@@ -72,12 +72,12 @@ plt.show()
 
 fpr_xgb, tpr_xgb, thresholds = roc_curve(y_valid.ravel(), y_pred_xgb[:,1].ravel())
 auc_xgb = auc(fpr_xgb, tpr_xgb)
-plt.plot(tpr_xgb, 1-fpr_xgb,label=f'XGB, AUC={auc_xgb:.2f}')
+plt.plot(tpr_xgb, 1/(fpr_xgb+1e-5),label=f'XGB, AUC={auc_xgb:.2f}')
 #plt.plot(tpr_xgb, 1/(fpr_xgb+.000001),label=f'RandomForestClassifier, AUC={auc_xgb:.2f}')
-#plt.yscale('log')
+plt.yscale('log')
 plt.xlabel('Signal Efficiency')
 plt.ylabel('Background Rejection')
-plt.xlim([0.0, 1.0])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.legend(loc='lower left',title_fontsize='x-small')
+plt.xlim([0.01, 1.0])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.legend()#loc='lower left',title_fontsize='x-small')
 plt.show()

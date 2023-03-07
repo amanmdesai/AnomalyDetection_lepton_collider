@@ -1,0 +1,19 @@
+import model heft
+
+define l+ = e+ mu+
+define l- = e- mu-
+define j = u u~ d d~ s s~ c c~ b b~
+generate e+ e- > j j l+ l-
+
+output background
+
+launch
+
+set lpp1 0
+set lpp2 0
+
+set ebeam1 120
+set ebeam2 120
+
+set nevents 100000
+set sde_strategy 1

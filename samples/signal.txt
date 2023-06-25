@@ -1,0 +1,24 @@
+set auto_convert_model T
+import model 2HDM
+
+define l+ = e+ mu+
+define l- = e- mu-
+
+generate e+ e- > z h1, z > l+ l-, h1 > j j
+
+output signal
+
+launch
+
+set lpp1 0
+set lpp2 0
+
+set ebeam1 120
+set ebeam2 120
+
+set mh1 96
+set mh2 125
+set wh1 auto
+set wh2 auto
+
+set nevents 100000
